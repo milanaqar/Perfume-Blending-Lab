@@ -4,6 +4,24 @@
 #include <string>
 using namespace std;
 
+void main_menu()
+{
+    cout << "1. Show stocks \n";
+    cout << "2. Show reciepts\n";
+    cout << "3. Create perfume\n";
+    cout << "4. Exit\n";
+
+    int choice;
+    cout << "\nEnter choice: ";
+    cin >> choice;
+}
+
+void start_stocks()
+{
+    cout << "Alcohol: 100ml\nRose smell: 300ml\nVanilia smell\nCitrus smell: 200ml\nEmpty bottles: 50\n";
+    cout << "------------------\n";
+}
+
 int main()
 {
     string user, pass;
@@ -43,10 +61,12 @@ int main()
         return 0;
     }
 
+
     
-}
-
-function main_menu()
-{
-
+    if (int choiice = '1')
+    {
+        start_stocks();
+        main_menu();
+    }
+    return 0;
 }
