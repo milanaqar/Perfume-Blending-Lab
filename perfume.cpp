@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-void main_menu()
+int main_menu()
 {
     cout << "1. Show stocks \n";
     cout << "2. Show reciepts\n";
@@ -14,11 +14,18 @@ void main_menu()
     int choice;
     cout << "\nEnter choice: ";
     cin >> choice;
+    
+    return choice;
 }
 
 void start_stocks()
 {
-    cout << "Alcohol: 100ml\nRose smell: 300ml\nVanilia smell\nCitrus smell: 200ml\nEmpty bottles: 50\n";
+    cout << "\n--- STOCKS ---\n";
+    cout << "Alcohol: 100ml\n";
+    cout << "Rose smell: 300ml\n";
+    cout << "Vanilla smell: 250ml\n";
+    cout << "Citrus smell: 200ml\n";
+    cout << "Empty bottles: 50\n";
     cout << "------------------\n";
 }
 
@@ -61,12 +68,30 @@ int main()
         return 0;
     }
 
-
-    
-    if (int choiice = '1')
+    while (true)
     {
-        start_stocks();
-        main_menu();
+        int choice = main_menu();
+
+        switch (choice)
+        {
+            case 1:
+                start_stocks();
+                break;
+            case 2:
+                cout << "\n--- RECIPES ---\n";
+                cout << "Rose Mist: Αλκοόλη 20 ml, Άρωμα Τριαντάφυλλου 10 ml, Μπουκάλι 1.\n";
+                cout << "Vanilla Dream: Vanilla Dream 25ml, Άρωμα Βανίλιας 12 ml, Μπουκάλι 1.\n";
+                cout << "Citrus Breeze: Αλκοόλη  18 ml, Έλαιο Εσπεριδοειδών 8 ml, Μπουκάλι 1.\n";
+                cout << "------------------\n";
+                break;
+            case 3:
+                cout << "Feature not implemented yet.\n";
+                break;
+            case 4:
+                cout << "Exiting program. Goodbye!\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
     }
-    return 0;
 }
