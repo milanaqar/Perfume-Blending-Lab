@@ -1,7 +1,7 @@
 // Perfume Blending System
-
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 int main_menu()
@@ -32,31 +32,41 @@ void start_stocks()
 
 void max_production()
 {
-    # stock 
-    int alcohol = 100;
+    // stock 
+    int alcohol = 1000;
     int rose = 300;
     int vanilla = 250;
     int citrus = 200;
     int bottles = 50;
     
-    # recipe per bottle
-    # Rose mist
+    // recipe per bottle
+    // Rose mist
     int rose_alcohol = 20;
-    int rose_essence = 20;
+    int rose_essence = 10;
     
-    # Vanilla Dream
+    // Vanilla Dream
     int vanilla_alcohol = 25;
     int vanilla_essence = 12;
     
-    # Citrus Dream 
+    // Citrus Dream 
     int citrus_alcohol = 18;
     int citrus_oil = 8;
     
-    # calculation 
+    // calculation 
+    int max_rose = min({alcohol / rose_alcohol, rose / rose_essence, bottles});
+    int max_vanilla = min({alcohol / vanilla_alcohol, vanilla / vanilla_essence, bottles});
+    int max_citrus = min({alcohol / citrus_alcohol, citrus / citrus_oil, bottles});
     
-    # output
+    // output
+    cout << "\n--- MAX POSSIBLE PRODUCTION ---\n";
+    cout << "Rose Mist: " << max_rose << " bottles\n";
+    cout << "Vanilla Dream: " << max_vanilla << " bottles\n";
+    cout << "Citrus Breeze: " << max_citrus << " bottles\n";
+    cout << "--------------------------------\n";
     
 }
+
+void 
 
 int main()
 {
@@ -113,7 +123,8 @@ int main()
                 cout << "------------------\n";
                 break;
             case 3:
-                cout << "Feature not implemented yet.\n";
+                max_production();
+                
                 break;
             case 4:
                 cout << "Exiting program. Goodbye!\n";
