@@ -21,12 +21,41 @@ int main_menu()
 void start_stocks()
 {
     cout << "\n--- STOCKS ---\n";
-    cout << "Alcohol: 100ml\n";
-    cout << "Rose smell: 300ml\n";
-    cout << "Vanilla smell: 250ml\n";
-    cout << "Citrus smell: 200ml\n";
-    cout << "Empty bottles: 50\n";
+    cout << "Alcohol: 1000 ml\n";
+    cout << "Rose Essence: 300 ml\n";
+    cout << "Vanilla Essence: 250 ml\n";
+    cout << "Citrus Oil: 200 ml\n";
+    cout << "Empty Bottles: 50\n";
     cout << "------------------\n";
+
+}
+
+void max_production()
+{
+    # stock 
+    int alcohol = 100;
+    int rose = 300;
+    int vanilla = 250;
+    int citrus = 200;
+    int bottles = 50;
+    
+    # recipe per bottle
+    # Rose mist
+    int rose_alcohol = 20;
+    int rose_essence = 20;
+    
+    # Vanilla Dream
+    int vanilla_alcohol = 25;
+    int vanilla_essence = 12;
+    
+    # Citrus Dream 
+    int citrus_alcohol = 18;
+    int citrus_oil = 8;
+    
+    # calculation 
+    
+    # output
+    
 }
 
 int main()
@@ -60,7 +89,6 @@ int main()
     if (loggedIn)
     {
         cout << "Login successful! Welcome, " << correctUser << ".\n";
-        main_menu();
     }
     else
     {
