@@ -1,4 +1,4 @@
-// Perfume Blending System
+// Perfume Blending Lab
 
 #include <iostream>
 #include <string>
@@ -15,6 +15,10 @@ int bottles = 50;
 int max_rose    = 0;
 int max_vanilla = 0;
 int max_citrus  = 0;
+
+int rose_produced = 0;     // για να κρατάει πόσα αρώματα έχουν παραχθεί
+int vanilla_produced = 0;
+int citrus_produced = 0;
 
 // ===== MAIN MENU =====
 int main_menu()
@@ -112,11 +116,17 @@ void choice_perfume()                          //Χωρίς παραμέτρου
           cin >> choice;
     }
 
-
         int quantity;
         cout << "Enter quantity (number of bottles): ";
         cin >> quantity;
 
+
+        if (quantity <= 0)
+        {
+            cout << "Please enter a positive quantity.\n";
+            choice_perfume();  // καλεί ξανά τη συνάρτηση για να επιλέξει ξανά
+            return;           // επιστρέφει για να μην εκτελεστεί ο υπόλοιπος κώδικας
+        }
 
     switch (choice)
     {
@@ -132,8 +142,10 @@ void choice_perfume()                          //Χωρίς παραμέτρου
                 rose    -= 10 * quantity;
                 bottles -= quantity;
                 cout << "Creating " << quantity << " bottles of Rose Mist!\n";
+                rose_produced += quantity;  // ενημέρωση παραχθέντων αρωμάτων
             }
             break;
+
 
         case 2:
             if (quantity > max_vanilla)
@@ -147,8 +159,10 @@ void choice_perfume()                          //Χωρίς παραμέτρου
                 vanilla -= 12 * quantity;
                 bottles -= quantity;
                 cout << "Creating " << quantity << " bottles of Vanilla Dream!\n";
+                vanilla_produced += quantity;
             }
             break;
+
 
         case 3:
             if (quantity > max_citrus)
@@ -162,11 +176,16 @@ void choice_perfume()                          //Χωρίς παραμέτρου
                 citrus  -=  8 * quantity;
                 bottles -= quantity;
                 cout << "Creating " << quantity << " bottles of Citrus Breeze!\n";
+                citrus_produced += quantity;
             }
             break;
     }
+
     max_production();  // for each time new max production 
 }
+
+
+
 
 // ===== MAIN =====
 int main()
@@ -208,7 +227,9 @@ int main()
         return 0;
     }
 
+    
 
+    // --- Main Loop ---
     while (true)
     {
         int choice = main_menu();
@@ -219,6 +240,7 @@ int main()
                 start_stocks();
                 break;
 
+
             case 2:
                 cout << "\n--- RECIPES ---\n";
                 cout << "Rose Mist:     Alcohol 20ml, Rose Essence 10ml, 1 Bottle\n";
@@ -226,6 +248,7 @@ int main()
                 cout << "Citrus Breeze: Alcohol 18ml, Citrus Oil 8ml, 1 Bottle\n";
                 cout << "------------------\n";
                 break;
+
 
             case 3:
                 max_production();       // υπολογισμός
@@ -235,32 +258,33 @@ int main()
                         cout << "Sorry... There is no more alcohol available... Exiting program...\n";
                         return 0;
                 }
-                
+
                 print_max_production(); // εκτύπωση
                 choice_perfume();       // επιλογή χρήστη
                 break;
             
+
             case 4: 
-                cout << "\n--- PRODUCED PERFUMES ---\n";
-                cout << "Rose Mist:     " << 1000 - alcohol / 20 << " bottles\n";      // υπολογισμός παραχθέντων αρωμάτων με βάση την ποσότητα που έχει αφαιρεθεί από το αρχικό stock
-                cout << "Vanilla Dream: " << 1000 - alcohol / 25 << " bottles\n";
-                cout << "Citrus Breeze: " << 1000 - alcohol / 18 << " bottles\n";
+                cout << "\n--- PRODUCED PERFUMES ---\n";                      // εκτύπωση παραχθέντων αρωμάτων
+                cout << "Rose Mist:     " << rose_produced << " bottles\n";     
+                cout << "Vanilla Dream: " << vanilla_produced << " bottles\n";
+                cout << "Citrus Breeze: " << citrus_produced << " bottles\n";
                 cout << "------------------\n";
                 break;
+
 
             case 5:
                 cout << "Exiting program. Goodbye!\n";
                 return 0;
+
+
             default:
                 cout << "Invalid choice. Please try again.\n";
         }
     }
 }
-
-// learn cin.ignore and cin.get and maybe change 
  
-// produced perfumes output need correction
-//  error: -2 creating perfume 
+
 
 
 
