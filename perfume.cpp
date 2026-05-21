@@ -2,74 +2,88 @@
 
 #include <iostream>
 #include <string>
-#include <algorithm>   // for min function
+#include <algorithm>  // for min function
 using namespace std;
 
+// ===== GLOBAL VARIABLES =====
+int alcohol = 1000;            //μπήκαν εδώ γιατί μεσα στη συνάρτηση max_production κάθε φορά τα επανέφερε στις αρχικές ποσότητες
+int rose    = 300;
+int vanilla = 250;
+int citrus  = 200;
+int bottles = 50;
+
+int max_rose    = 0;
+int max_vanilla = 0;
+int max_citrus  = 0;
+
+// ===== MAIN MENU =====
 int main_menu()
 {
-    cout << "1. Show stocks \n";
-    cout << "2. Show reciepts\n";
+    cout << "\n--- MAIN MENU ---\n";
+    cout << "1. Show stocks\n";
+    cout << "2. Show recipes\n";
     cout << "3. Create perfume\n";
-    cout << "4. Exit\n";
+    cout << "4. Produced perfumes\n";
+    cout << "5. Exit\n";
 
     int choice;
     cout << "\nEnter choice: ";
     cin >> choice;
-    
+
     return choice;
 }
 
+
+
+// ===== STOCKS =====
 void start_stocks()
 {
     cout << "\n--- STOCKS ---\n";
-    cout << "Alcohol: 1000 ml\n";
-    cout << "Rose Essence: 300 ml\n";
-    cout << "Vanilla Essence: 250 ml\n";
-    cout << "Citrus Oil: 200 ml\n";
-    cout << "Empty Bottles: 50\n";
+    cout << "Alcohol: " << alcohol << " ml\n";
+    cout << "Rose Essence: " << rose << " ml\n";
+    cout << "Vanilla Essence: " << vanilla << " ml\n";
+    cout << "Citrus Oil: " << citrus << " ml\n";
+    cout << "Empty Bottles: " << bottles << "\n";
     cout << "------------------\n";
-
 }
 
-int max_production()
+
+
+// ===== MAX PRODUCTION CALCULATION =====
+void max_production()                    
 {
-    // stock 
-    int alcohol = 1000;
-    int rose = 300;
-    int vanilla = 250;
-    int citrus = 200;
-    int bottles = 50;
-    
-    // recipe per bottle
-    // Rose mist
-    int rose_alcohol = 20;
-    int rose_essence = 10;
-    
-    // Vanilla Dream
+    // Recipe per bottle
+    int rose_alcohol    = 20;
+    int rose_essence    = 10;
+
     int vanilla_alcohol = 25;
     int vanilla_essence = 12;
-    
-    // Citrus Dream 
-    int citrus_alcohol = 18;
-    int citrus_oil = 8;
-    
-    // calculation 
-    int max_rose = min({alcohol / rose_alcohol, rose / rose_essence, bottles});
-    int max_vanilla = min({alcohol / vanilla_alcohol, vanilla / vanilla_essence, bottles});
-    int max_citrus = min({alcohol / citrus_alcohol, citrus / citrus_oil, bottles});
-    
-    // output
-    cout << "\n--- MAX POSSIBLE PRODUCTION ---\n";
-    cout << "Rose Mist: " << max_rose << " bottles\n";
-    cout << "Vanilla Dream: " << max_vanilla << " bottles\n";
-    cout << "Citrus Breeze: " << max_citrus << " bottles\n";
-    cout << "--------------------------------\n";
 
-    return max_rose, max_vanilla, max_citrus;
-    
+    int citrus_alcohol  = 18;
+    int citrus_oil      = 8;
+
+    // Update global variables
+    max_rose    = min({alcohol / rose_alcohol,    rose    / rose_essence,    bottles});
+    max_vanilla = min({alcohol / vanilla_alcohol, vanilla / vanilla_essence, bottles});
+    max_citrus  = min({alcohol / citrus_alcohol,  citrus  / citrus_oil,      bottles});
 }
 
-int choice_perfume(int max_rose)
+
+
+// ===== PRINT MAX PRODUCTION =====
+void print_max_production()        //ξεχωριστή συνάρτηση για εκτύπωση
+{
+    cout << "\n--- MAX POSSIBLE PRODUCTION ---\n";
+    cout << "Rose Mist:     " << max_rose    << " bottles\n";
+    cout << "Vanilla Dream: " << max_vanilla << " bottles\n";
+    cout << "Citrus Breeze: " << max_citrus  << " bottles\n";
+    cout << "--------------------------------\n";
+}
+
+
+
+// ===== CREATE PERFUME =====
+void choice_perfume()                          //Χωρίς παραμέτρους, διαβάζει τα globals
 {
     cout << "\n--- CREATE PERFUME ---\n";
     cout << "1. Rose Mist\n";
@@ -77,38 +91,87 @@ int choice_perfume(int max_rose)
     cout << "3. Citrus Breeze\n";
     cout << "------------------\n";
 
-    int choice_perfume;
+    int choice;
     cout << "Enter choice: ";
-    cin >> choice_perfume;
+    cin >> choice;
 
-    cout << "Enter quantity (number of bottles): ";
-    int quantity;
-    cin >> quantity;
-
-    switch (choice_perfume)
-    {
-        case 1:
-            cout << "Creating " << quantity << " bottles of Rose Mist...\n";
-           
-            if (quantity > max_rose)
-            {
-                cout << "Not enough stock to create " << quantity << " bottles of Rose Mist. Maximum possible: " << max_rose << " bottles.\n";
-            } 
-            break;
-        case 2:
-            cout << "Creating " << quantity << " bottles of Vanilla Dream...\n";
-            break;
-        case 3:
-            cout << "Creating " << quantity << " bottles of Citrus Breeze...\n";
-            break;
-        default:
-            cout << "Invalid choice. Returning to main menu.\n";
+    while (choice < 1 || choice > 3 ||              // Έλεγχος με while γιατί ζητούσε την ποσότητα ακόμα κι αν είχε πατήσει λάθος επιλογή
+          (choice == 1 && max_rose == 0)    ||
+          (choice == 2 && max_vanilla == 0) ||  // Αν επιλέξει αρωμα που το max του είναι 0, δεν τον αφήνει να προχωρήσει και του ζητά νέα επιλογή 
+          (choice == 3 && max_citrus == 0)) 
+    {  
+                            
+          if (choice >= 1 && choice <= 3)
+          {
+              cout << "Not enough stock for that perfume! Choose another: ";
+          }
+          else
+          {
+              cout << "Enter a valid choice (1-3) : ";
+          }
+          cin >> choice;
     }
 
+
+        int quantity;
+        cout << "Enter quantity (number of bottles): ";
+        cin >> quantity;
+
+
+    switch (choice)
+    {
+        case 1:
+            if (quantity > max_rose)
+            {
+                cout << "Not enough stock! Maximum possible: " << max_rose << " bottles.\n";
+                choice_perfume();  // καλεί ξανά τη συνάρτηση για να επιλέξει ξανά
+            } 
+            else
+            {                                      // αφαίρεση υλικών σε κάθε else για να αλλάζει το stock
+                alcohol -= 20 * quantity;
+                rose    -= 10 * quantity;
+                bottles -= quantity;
+                cout << "Creating " << quantity << " bottles of Rose Mist!\n";
+            }
+            break;
+
+        case 2:
+            if (quantity > max_vanilla)
+            {
+                cout << "Not enough stock! Maximum possible: " << max_vanilla << " bottles.\n";
+                choice_perfume();  // καλεί ξανά τη συνάρτηση για να επιλέξει ξανά
+            }   
+            else
+            {
+                alcohol -= 25 * quantity;
+                vanilla -= 12 * quantity;
+                bottles -= quantity;
+                cout << "Creating " << quantity << " bottles of Vanilla Dream!\n";
+            }
+            break;
+
+        case 3:
+            if (quantity > max_citrus)
+            {
+                cout << "Not enough stock! Maximum possible: " << max_citrus << " bottles.\n";
+                choice_perfume();  // καλεί ξανά τη συνάρτηση για να επιλέξει ξανά
+            }     
+            else
+            {
+                alcohol -= 18 * quantity;
+                citrus  -=  8 * quantity;
+                bottles -= quantity;
+                cout << "Creating " << quantity << " bottles of Citrus Breeze!\n";
+            }
+            break;
+    }
+    max_production();  // for each time new max production 
 }
 
+// ===== MAIN =====
 int main()
 {
+    // --- Login ---
     string user, pass;
     const string correctUser = "perfumer";
     const string correctPass = "blend123";
@@ -127,7 +190,7 @@ int main()
         if (user == correctUser && pass == correctPass)
         {
             loggedIn = true;
-            break;  // βγαίνει από το loop
+            break;
         }
         else
         {
@@ -137,7 +200,7 @@ int main()
 
     if (loggedIn)
     {
-        cout << "Login successful! Welcome, " << correctUser << ".\n";
+        cout << "Login successful! Welcome, " << correctUser << "!\n";
     }
     else
     {
@@ -145,28 +208,50 @@ int main()
         return 0;
     }
 
+
     while (true)
     {
         int choice = main_menu();
-        int max_rose = max_production();
 
         switch (choice)
         {
             case 1:
                 start_stocks();
                 break;
-            case 2:                       // error : showing max production without need 
+
+            case 2:
                 cout << "\n--- RECIPES ---\n";
-                cout << "Rose Mist: Αλκοόλη 20 ml, Άρωμα Τριαντάφυλλου 10 ml, Μπουκάλι 1.\n";
-                cout << "Vanilla Dream: Vanilla Dream 25ml, Άρωμα Βανίλιας 12 ml, Μπουκάλι 1.\n";
-                cout << "Citrus Breeze: Αλκοόλη  18 ml, Έλαιο Εσπεριδοειδών 8 ml, Μπουκάλι 1.\n";
+                cout << "Rose Mist:     Alcohol 20ml, Rose Essence 10ml, 1 Bottle\n";
+                cout << "Vanilla Dream: Alcohol 25ml, Vanilla Essence 12ml, 1 Bottle\n";
+                cout << "Citrus Breeze: Alcohol 18ml, Citrus Oil 8ml, 1 Bottle\n";
                 cout << "------------------\n";
                 break;
+
             case 3:
-                max_production();       // error: showing max production two times
-                choice_perfume(max_rose);
+                max_production();       // υπολογισμός
+                
+                if (max_rose == 0 && max_vanilla == 0 && max_citrus == 0)
+                {        // αν και τα 3 max είναι 0, δεν υπάρχει κανένα άρωμα που μπορεί να παραχθεί, οπότε τερματίζει.
+                        cout << "Sorry...No more production possible. Exiting program...\n";
+                        cout << "Press Enter to exit...\n";
+                        cin.ignore();     // learn what this doing 
+                        cin.get();       // περιμένει να πατήσει Enter // learn what this doing
+                        return 0;
+                }
+                
+                print_max_production(); // εκτύπωση
+                choice_perfume();       // επιλογή χρήστη
                 break;
-            case 4:
+            
+            case 4: 
+                cout << "\n--- PRODUCED PERFUMES ---\n";
+                cout << "Rose Mist:     " << 1000 - alcohol / 20 << " bottles\n";      // υπολογισμός παραχθέντων αρωμάτων με βάση την ποσότητα που έχει αφαιρεθεί από το αρχικό stock
+                cout << "Vanilla Dream: " << 1000 - alcohol / 25 << " bottles\n";
+                cout << "Citrus Breeze: " << 1000 - alcohol / 18 << " bottles\n";
+                cout << "------------------\n";
+                break;
+
+            case 5:
                 cout << "Exiting program. Goodbye!\n";
                 return 0;
             default:
@@ -174,3 +259,9 @@ int main()
         }
     }
 }
+
+// learn cin.ignore and cin.get and maybe change 
+//  error: -2 creating perfume 
+
+
+
