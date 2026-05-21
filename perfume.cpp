@@ -232,10 +232,7 @@ int main()
                 
                 if (max_rose == 0 && max_vanilla == 0 && max_citrus == 0)
                 {        // αν και τα 3 max είναι 0, δεν υπάρχει κανένα άρωμα που μπορεί να παραχθεί, οπότε τερματίζει.
-                        cout << "Sorry...No more production possible. Exiting program...\n";
-                        cout << "Press Enter to exit...\n";
-                        cin.ignore();     // learn what this doing 
-                        cin.get();       // περιμένει να πατήσει Enter // learn what this doing
+                        cout << "Sorry... There is no more alcohol available... Exiting program...\n";
                         return 0;
                 }
                 
@@ -261,6 +258,8 @@ int main()
 }
 
 // learn cin.ignore and cin.get and maybe change 
+ 
+// produced perfumes output need correction
 //  error: -2 creating perfume 
 
 
